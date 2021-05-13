@@ -23,17 +23,17 @@ app.route("/gpchatfeed/:chatuuid").post(function (req, res, next) {
   req.busboy.on("file", function (fieldname, file, filename) {
     console.log("Uploading: " + filename);
     //Path where image will be uploaded
-    fs.promises.mkdir(`/var/www/cdn/GaryPortal/Chat/${req.params.chatuuid}`, {
+    fs.promises.mkdir(`/var/www/cdn/GaryPortal/Chat/${req.params.chatuuid}/Attachments`, {
       recursive: true,
     });
     fstream = fs.createWriteStream(
-      `/var/www/cdn/GaryPortal/Chat/${req.params.chatuuid}/${filename}`
+      `/var/www/cdn/GaryPortal/Chat/${req.params.chatuuid}/Attachments/${filename}`
     );
     file.pipe(fstream);
     fstream.on("close", function () {
       console.log("Upload Finished of " + filename);
       res.redirect(
-        `https://cdn.tomk.online/GaryPortal/Chat/${req.params.chatuuid}/${filename}`
+        `https://cdn.tomk.online/GaryPortal/Chat/${req.params.chatuuid}/Attachments/${filename}`
       );
     });
   });
